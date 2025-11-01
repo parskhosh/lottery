@@ -1,4 +1,5 @@
 import {hook} from './ui.js';
+import {fmtBase} from './currency.js';
 
 class RingBuffer{
   constructor(cap){
@@ -65,7 +66,11 @@ function renderVirtual(list, container){
   if(!container) return;
   const data = list.toArray().filter(passes);
   const chunk = data.slice(-400); // virtual window
-  container.innerHTML = chunk.map(row=>`<div class="log-row" data-idx="${row.idx}"><strong>#${row.idx}</strong> — matches ${row.matches}${row.bonus?'+B':''} — prize ${row.prize}</div>`).join('');
+  container.innerHTML = chunk.map(row=>{
+    const prize = fmtBase(row.prize||0);
+    const cost = fmtBase(row.cost||0);
+    return `<div class="log-row" data-idx="${row.idx}"><strong>#${row.idx}</strong> — matches ${row.matches}${row.bonus?'+B':''} — prize ${prize} — cost ${cost}</div>`;
+  }).join('');
 }
 
 export function renderLogs(){

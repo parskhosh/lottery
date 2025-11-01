@@ -1,4 +1,4 @@
-import {applyLang} from './i18n.js';
+import {applyLang, getStoredLang} from './i18n.js';
 
 export const $ = s => document.querySelector(s);
 export const hook = k => document.querySelector(`[data-hook="${k}"]`);
@@ -10,6 +10,7 @@ export function bind(k, evt, fn){
   window.diag?.(`bind:${k}`, evt);
 }
 
+const TAB_KEY = 'lsim.tab';
 const toastContainer = hook('toast-container');
 let toastId = 0;
 export function toast(message, opts={}){
@@ -32,33 +33,53 @@ export function toggleTheme(){
   const next = html.getAttribute('data-theme')==='dark'?'light':'dark';
   html.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
+  html.dispatchEvent(new CustomEvent('themechange', {detail:{theme:next}}));
 }
 
 bind('toggle-theme','click', e=>{e.preventDefault();toggleTheme();});
 bind('toggle-lang','click', e=>{
   e.preventDefault();
-  const current = localStorage.getItem('lang') || 'fa';
+  const current = getStoredLang();
   const next = current==='fa'?'en':'fa';
   applyLang(next);
 });
 
 export function setupTabs(){
-  document.querySelectorAll('[data-tab]').forEach(btn=>{
+  const buttons = Array.from(document.querySelectorAll('[data-tab]'));
+  if(!buttons.length) return;
+  const saved = localStorage.getItem(TAB_KEY);
+  const initial = buttons.find(btn=>btn.getAttribute('data-tab')===saved) || buttons[0];
+  activateTab(initial.getAttribute('data-tab'));
+  buttons.forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const to = btn.getAttribute('data-tab');
-      document.querySelectorAll('[data-panel]').forEach(p=>{
-        p.hidden = p.getAttribute('data-panel')!==to;
-      });
-      document.querySelectorAll('[data-tab]').forEach(t=>{
-        t.classList.toggle('active', t===btn);
-      });
+      activateTab(to);
     }, {once:false});
   });
 }
 
+function activateTab(name){
+  if(!name) return;
+  document.querySelectorAll('[data-panel]').forEach(p=>{
+    p.hidden = p.getAttribute('data-panel')!==name;
+  });
+  document.querySelectorAll('[data-tab]').forEach(t=>{
+    t.classList.toggle('active', t.getAttribute('data-tab')===name);
+  });
+  localStorage.setItem(TAB_KEY, name);
+}
+
 export function updateStatusUI(state){
   const label = hook('status-label');
-  if(label) label.textContent = state;
+  if(!label) return;
+  const lang = getStoredLang();
+  const map = {
+    idle:{fa:'آماده', en:'Idle'},
+    running:{fa:'در حال اجرا', en:'Running'},
+    paused:{fa:'مکث', en:'Paused'},
+    stopped:{fa:'متوقف', en:'Stopped'}
+  };
+  label.textContent = map[state]?.[lang] || state;
 }
 
 export function pulseTicket(el){
@@ -86,4 +107,5 @@ export function tooltip(target, text){
 export function syncToggle(el, value){
   if(!el) return;
   el.dataset.on = value?'true':'false';
+  el.setAttribute('aria-checked', value?'true':'false');
 }

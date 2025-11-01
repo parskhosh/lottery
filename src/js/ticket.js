@@ -4,6 +4,7 @@ const sets = { pinned:new Set(), preferred:new Set(), excluded:new Set() };
 const grid = hook('ticket-grid');
 const TICKET_SIZE = 5;
 const maxN = 40;
+const EVENT = 'ticketsetschange';
 
 function ensureGrid(){
   if(!grid || grid.childElementCount) return;
@@ -33,6 +34,7 @@ function clearNumber(n){
   sets.preferred.delete(n);
   sets.excluded.delete(n);
   renderGridStates();
+  notifyChange();
 }
 
 export function renderGridStates(){
@@ -58,6 +60,7 @@ export function toggle(kind, n, k=TICKET_SIZE){
     sets.excluded.add(n);
   }
   renderGridStates();
+  notifyChange();
 }
 
 export function buildTicket(k=TICKET_SIZE){
@@ -95,6 +98,7 @@ export function hydrateTicket(ticket){
 export function resetTicketPrefs(){
   sets.pinned.clear(); sets.preferred.clear(); sets.excluded.clear();
   renderGridStates();
+  notifyChange();
 }
 
 export function exportSets(){
@@ -106,7 +110,13 @@ export function importSets(data){
   sets.preferred = new Set(data.preferred||[]);
   sets.excluded = new Set(data.excluded||[]);
   renderGridStates();
+  notifyChange();
 }
 
 ensureGrid();
 renderGridStates();
+notifyChange();
+
+function notifyChange(){
+  document.documentElement.dispatchEvent(new CustomEvent(EVENT, {detail:exportSets()}));
+}

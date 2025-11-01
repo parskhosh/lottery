@@ -14,7 +14,14 @@ const defaultSettings = {
 
 export function loadSettings(){
   try{
-    return {...defaultSettings, ...(JSON.parse(localStorage.getItem(SETTINGS_KEY))||{})};
+    const stored = JSON.parse(localStorage.getItem(SETTINGS_KEY))||{};
+    return {
+      ...defaultSettings,
+      ...stored,
+      limit:{...defaultSettings.limit, ...(stored.limit||{})},
+      eco:{...defaultSettings.eco, ...(stored.eco||{})},
+      cfg:{...defaultSettings.cfg, ...(stored.cfg||{})}
+    };
   }catch(err){
     console.error('loadSettings failed', err);
     return {...defaultSettings};

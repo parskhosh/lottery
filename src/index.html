@@ -17,8 +17,8 @@
   <header>
     <div class="badge"><i class="fa fa-solid fa-ticket"></i><span>Lottery Simulator Pro</span></div>
     <div class="actions" style="display:flex;align-items:center;gap:8px">
-      <button class="btn-ghost btn-icon" data-hook="toggle-theme" aria-label="Toggle theme"><i class="fa fa-solid fa-sun"></i></button>
-      <button class="btn-ghost btn-icon" data-hook="toggle-lang" aria-label="Toggle language"><i class="fa fa-solid fa-language"></i></button>
+      <button type="button" class="btn-ghost btn-icon" data-hook="toggle-theme" aria-label="Toggle theme"><i class="fa fa-solid fa-sun"></i></button>
+      <button type="button" class="btn-ghost btn-icon" data-hook="toggle-lang" aria-label="Toggle language"><i class="fa fa-solid fa-language"></i></button>
     </div>
   </header>
   <main>
@@ -40,18 +40,18 @@
           <div class="card" style="padding:16px;gap:12px">
             <div class="panel-header"><span>Controls</span></div>
             <div style="display:flex;flex-wrap:wrap;gap:8px">
-              <button class="btn-primary" data-hook="btn-start"><i class="fa fa-solid fa-play"></i><span data-i18n="start">شروع</span></button>
-              <button class="btn-ghost" data-hook="btn-pause"><i class="fa fa-solid fa-pause"></i><span data-i18n="pause">توقف</span></button>
-              <button class="btn-ghost" data-hook="btn-stop"><i class="fa fa-solid fa-stop"></i><span data-i18n="stop">ایست</span></button>
-              <button class="btn-ghost" data-hook="btn-reset"><i class="fa fa-solid fa-rotate"></i><span data-i18n="reset">بازنشانی</span></button>
-              <button class="btn-ghost" data-hook="btn-export"><i class="fa fa-solid fa-file-export"></i><span data-i18n="export">خروجی</span></button>
+              <button type="button" class="btn-primary" data-hook="btn-start"><i class="fa fa-solid fa-play"></i><span data-i18n="start">شروع</span></button>
+              <button type="button" class="btn-ghost" data-hook="btn-pause"><i class="fa fa-solid fa-pause"></i><span data-i18n="pause">توقف</span></button>
+              <button type="button" class="btn-ghost" data-hook="btn-stop"><i class="fa fa-solid fa-stop"></i><span data-i18n="stop">ایست</span></button>
+              <button type="button" class="btn-ghost" data-hook="btn-reset"><i class="fa fa-solid fa-rotate"></i><span data-i18n="reset">بازنشانی</span></button>
+              <button type="button" class="btn-ghost" data-hook="btn-export"><i class="fa fa-solid fa-file-export"></i><span data-i18n="export">خروجی</span></button>
             </div>
             <form class="control-form" style="display:flex;flex-direction:column;gap:12px">
               <label>Batch Size<input type="number" min="100" max="10000" value="1000" data-hook="input-batch"></label>
               <label>UI Delay (ms)<input type="number" min="1" max="100" value="10" data-hook="input-delay"></label>
               <label>Limit Kind<select data-hook="select-limit-kind"><option value="none">None</option><option value="tickets">Tickets</option><option value="minutes">Minutes</option><option value="days">Days</option></select></label>
               <label>Limit Value<input type="number" min="1" value="1000" data-hook="input-limit-value"></label>
-              <label class="switch" data-hook="toggle-eco" data-on="false" tabindex="0"><span class="sr-only">Eco Mode</span></label>
+              <label class="switch" data-hook="toggle-eco" data-on="false" tabindex="0" role="switch" aria-checked="false"><span class="sr-only">Eco Mode</span></label>
               <div class="chip"><i class="fa fa-solid fa-circle-info"></i><span>Eco mode caps worker speed when hidden.</span></div>
             </form>
           </div>
@@ -62,8 +62,8 @@
           <div class="panel-header"><span>Current Ticket</span><span data-hook="current-ticket">—</span></div>
           <div class="panel-header"><span>Current Draw Result</span><span data-hook="current-draw">—</span></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn-primary" data-hook="quick-pick">Quick Pick</button>
-            <button class="btn-ghost" data-hook="clear-prefs">Clear</button>
+            <button type="button" class="btn-primary" data-hook="quick-pick">Quick Pick</button>
+            <button type="button" class="btn-ghost" data-hook="clear-prefs">Clear</button>
           </div>
           <div class="badge"><i class="fa fa-solid fa-circle-info"></i><span>Pinned numbers are guaranteed, preferred are biased, excluded never appear.</span></div>
         </section>

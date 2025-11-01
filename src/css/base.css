@@ -1,7 +1,7 @@
 /* base.css */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;}
-body{font-family:system-ui,sans-serif;background:var(--page);color:var(--text);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{font-family:var(--font-body,system-ui,sans-serif);background:var(--page);color:var(--text);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 button,input,select,textarea{font:inherit;color:inherit}
 a{text-decoration:none;color:inherit}
 ul{list-style:none;padding:0;margin:0}
