@@ -1,0 +1,10 @@
+.chart-card{padding:16px;border-radius:16px;border:1px solid var(--border);background:var(--box);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+.chart-card canvas{width:100%;height:180px;background:var(--page);border-radius:12px;border:1px solid var(--border)}
+.chart-header{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted)}
+.chart-header strong{color:var(--text);font-size:15px}
+.chart-legend{display:flex;align-items:center;gap:12px;font-size:12px}
+.chart-legend span{display:inline-flex;align-items:center;gap:6px}
+.chart-dot{width:10px;height:10px;border-radius:50%}
+.chart-dot.pl{background:var(--primary)}
+.chart-dot.roi{background:var(--secondary)}
+.chart-dot.daily{background:color-mix(in oklab,var(--secondary) 70%,var(--primary) 30%)}

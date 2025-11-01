@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fa" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lottery Simulator</title>
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/theme.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/charts.css">
+  <link rel="stylesheet" href="./css/fontawesome.min.css">
+  <link rel="stylesheet" href="./css/solid.min.css">
+  <link rel="stylesheet" href="./css/regular.min.css">
+</head>
+<body>
+  <header>
+    <div class="badge"><i class="fa fa-solid fa-ticket"></i><span>Lottery Simulator Pro</span></div>
+    <div class="actions" style="display:flex;align-items:center;gap:8px">
+      <button type="button" class="btn-ghost btn-icon" data-hook="toggle-theme" aria-label="Toggle theme"><i class="fa fa-solid fa-sun"></i></button>
+      <button type="button" class="btn-ghost btn-icon" data-hook="toggle-lang" aria-label="Toggle language"><i class="fa fa-solid fa-language"></i></button>
+    </div>
+  </header>
+  <main>
+    <nav class="tabs" data-hook="tabs">
+      <button type="button" class="active" data-tab="settings"><i class="fa fa-solid fa-gear"></i><span data-i18n="settings">تنظیمات</span></button>
+      <button type="button" data-tab="tickets"><i class="fa fa-solid fa-ticket"></i><span data-i18n="tickets">بلیت‌ها</span></button>
+      <button type="button" data-tab="analytics"><i class="fa fa-solid fa-chart-line"></i><span data-i18n="analytics">آمار</span></button>
+    </nav>
+    <div class="layout">
+      <div class="column">
+        <section class="card" data-panel="settings">
+          <h2><i class="fa fa-solid fa-gear"></i><span data-i18n="settings">تنظیمات</span></h2>
+          <div class="panel-header"><strong>Status</strong><span class="chip" data-hook="status-label">Idle</span></div>
+          <div class="info-grid">
+            <div class="stat-card"><span>Tickets</span><strong data-hook="stat-tickets">0</strong></div>
+            <div class="stat-card"><span>Days</span><strong data-hook="stat-days">0</strong></div>
+            <div class="stat-card"><span>Jackpots</span><strong data-hook="stat-jackpots">0</strong></div>
+          </div>
+          <div class="card" style="padding:16px;gap:12px">
+            <div class="panel-header"><span>Controls</span></div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <button type="button" class="btn-primary" data-hook="btn-start"><i class="fa fa-solid fa-play"></i><span data-i18n="start">شروع</span></button>
+              <button type="button" class="btn-ghost" data-hook="btn-pause"><i class="fa fa-solid fa-pause"></i><span data-i18n="pause">توقف</span></button>
+              <button type="button" class="btn-ghost" data-hook="btn-stop"><i class="fa fa-solid fa-stop"></i><span data-i18n="stop">ایست</span></button>
+              <button type="button" class="btn-ghost" data-hook="btn-reset"><i class="fa fa-solid fa-rotate"></i><span data-i18n="reset">بازنشانی</span></button>
+              <button type="button" class="btn-ghost" data-hook="btn-export"><i class="fa fa-solid fa-file-export"></i><span data-i18n="export">خروجی</span></button>
+            </div>
+            <form class="control-form" style="display:flex;flex-direction:column;gap:12px">
+              <label>Batch Size<input type="number" min="100" max="10000" value="1000" data-hook="input-batch"></label>
+              <label>UI Delay (ms)<input type="number" min="1" max="100" value="10" data-hook="input-delay"></label>
+              <label>Limit Kind<select data-hook="select-limit-kind"><option value="none">None</option><option value="tickets">Tickets</option><option value="minutes">Minutes</option><option value="days">Days</option></select></label>
+              <label>Limit Value<input type="number" min="1" value="1000" data-hook="input-limit-value"></label>
+              <label class="switch" data-hook="toggle-eco" data-on="false" tabindex="0" role="switch" aria-checked="false"><span class="sr-only">Eco Mode</span></label>
+              <div class="chip"><i class="fa fa-solid fa-circle-info"></i><span>Eco mode caps worker speed when hidden.</span></div>
+            </form>
+          </div>
+        </section>
+        <section class="card" data-panel="tickets" hidden>
+          <h2><i class="fa fa-solid fa-ticket"></i><span data-i18n="tickets">بلیت‌ها</span></h2>
+          <div class="ticket-grid" data-hook="ticket-grid"></div>
+          <div class="panel-header"><span>Current Ticket</span><span data-hook="current-ticket">—</span></div>
+          <div class="panel-header"><span>Current Draw Result</span><span data-hook="current-draw">—</span></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button type="button" class="btn-primary" data-hook="quick-pick">Quick Pick</button>
+            <button type="button" class="btn-ghost" data-hook="clear-prefs">Clear</button>
+          </div>
+          <div class="badge"><i class="fa fa-solid fa-circle-info"></i><span>Pinned numbers are guaranteed, preferred are biased, excluded never appear.</span></div>
+        </section>
+        <section class="card" data-panel="analytics" hidden>
+          <h2><i class="fa fa-solid fa-chart-line"></i><span data-i18n="analytics">آمار</span></h2>
+          <div class="info-grid">
+            <div class="stat-card"><span>Spent</span><strong data-hook="stat-spent">0</strong></div>
+            <div class="stat-card"><span>Paid</span><strong data-hook="stat-paid">0</strong></div>
+            <div class="stat-card"><span>Net</span><strong data-hook="stat-net">0</strong></div>
+            <div class="stat-card"><span>ROI</span><strong data-hook="stat-roi">0%</strong></div>
+            <div class="stat-card"><span>Rate</span><strong data-hook="stat-rate">0/s</strong></div>
+            <div class="stat-card"><span>Hit Map</span><strong data-hook="stat-hit">0</strong></div>
+          </div>
+        </section>
+      </div>
+      <div class="column">
+        <section class="card">
+          <h2><i class="fa fa-solid fa-chart-line"></i><span>Performance</span></h2>
+          <div class="canvas-grid">
+            <div class="chart-card">
+              <div class="chart-header"><strong>P/L</strong><span class="chart-legend"><span><span class="chart-dot pl"></span>Net</span></span></div>
+              <canvas data-hook="chart-pl" width="320" height="180"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header"><strong>ROI</strong><span class="chart-legend"><span><span class="chart-dot roi"></span>ROI</span></span></div>
+              <canvas data-hook="chart-roi" width="320" height="180"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header"><strong>Daily P/L</strong><span class="chart-legend"><span><span class="chart-dot daily"></span>Daily</span></span></div>
+              <canvas data-hook="chart-daily" width="320" height="180"></canvas>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header"><strong>Hit Distribution</strong></div>
+              <canvas data-hook="chart-hit" width="320" height="180"></canvas>
+            </div>
+          </div>
+        </section>
+        <section class="card">
+          <h2><i class="fa fa-solid fa-circle-info"></i><span>Purchase Log</span></h2>
+          <div class="logs-viewport" data-hook="log-viewport"><div data-hook="log-virtual"></div></div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <label style="flex:1">Search<input type="search" data-hook="log-search" placeholder="Match, prize..."></label>
+            <label>Min Prize<input type="number" data-hook="log-min"></label>
+            <label>Max Prize<input type="number" data-hook="log-max"></label>
+            <label class="chip" style="cursor:pointer"><input type="checkbox" data-hook="log-wins-only"> Wins only</label>
+          </div>
+        </section>
+      </div>
+      <div class="column">
+        <section class="card">
+          <h2><i class="fa fa-solid fa-circle-info"></i><span>Wins Log</span></h2>
+          <div class="logs-viewport" data-hook="wins-viewport"><div data-hook="wins-virtual"></div></div>
+        </section>
+        <section class="card">
+          <h2><i class="fa fa-solid fa-circle-info"></i><span>Sessions</span></h2>
+          <ul data-hook="session-list" style="display:flex;flex-direction:column;gap:8px"></ul>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <span>Engine running in Web Worker with adaptive throttling.</span>
+    <span>&copy; Simulator</span>
+  </footer>
+  <div class="toast-container" data-hook="toast-container" aria-live="polite"></div>
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
