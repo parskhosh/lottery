@@ -1,0 +1,14 @@
+.fa-play::before{content:'\f04b'}
+.fa-pause::before{content:'\f04c'}
+.fa-stop::before{content:'\f04d'}
+.fa-rotate::before{content:'\f2f1'}
+.fa-file-export::before{content:'\f56e'}
+.fa-sun::before{content:'\f185'}
+.fa-moon::before{content:'\f186'}
+.fa-language::before{content:'\f1ab'}
+.fa-ticket::before{content:'\f145'}
+.fa-chart-line::before{content:'\f201'}
+.fa-gear::before{content:'\f013'}
+.fa-circle-info::before{content:'\f05a'}
+.fa-circle-check::before{content:'\f058'}
+.fa-triangle-exclamation::before{content:'\f071'}
